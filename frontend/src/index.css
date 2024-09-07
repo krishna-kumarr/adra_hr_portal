@@ -1,0 +1,643 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.row {
+  --bs-gutter-x: 0 !important;
+}
+
+body{
+  font-size: 14px !important;
+}
+
+:root {
+  --total-height: 100vh;
+  --brand-bg-color: #52839A;
+  --brand-text-color: #fff;
+  --developer-cards-active-card-color: #c5dff8a6;
+  --background-color: #f8f6fff2;
+  --nav-height: 4rem;
+}
+
+.right-side-cntent-overall-height::-webkit-scrollbar,
+.cards-overflow-webkit::-webkit-scrollbar,
+.hr-page-background-clr::-webkit-scrollbar,
+.hr-home-scrollbar::-webkit-scrollbar,
+.table-scrollbar::-webkit-scrollbar,
+.hr-home-calender-min-height::-webkit-scrollbar,
+.employee-page-table-height::-webkit-scrollbar,
+.calendar-title-min-height::-webkit-scrollbar,
+.main-content-overall-height::-webkit-scrollbar,
+.hr-home-calender-widget .card::-webkit-scrollbar,
+.applicant-table-Overflow::-webkit-scrollbar,
+.applicant-page-table-height::-webkit-scrollbar,
+.employee-page-table-height .card::-webkit-scrollbar,
+.applicant-page-table-height .card::-webkit-scrollbar,
+.table-section::-webkit-scrollbar,
+.hr-home-ticket-min-height::-webkit-scrollbar{
+  width: 0 !important;
+}
+
+/* data table font size  */
+.dataTables_wrapper .rdt_Table,
+.dataTables_wrapper .rdt_TableRow,
+.dataTables_wrapper .rdt_TableCol,
+.dataTables_wrapper .rdt_TableCol_Sortable,
+.dataTables_wrapper .rdt_TableCell,
+.dataTables_wrapper .rdt_TableHeader,
+.dataTables_wrapper .rdt_TableFooter,
+.dataTables_wrapper .rdt_TableHead,
+.dataTables_wrapper .rdt_TableHeadRow,
+.dataTables_wrapper .rdt_TableBody,
+.dataTables_wrapper .rdt_ExpanderRow {
+  font-size: 16px;
+}
+
+@media (min-width:1400px){
+  .calender-sidebar-width{
+    width: 20% !important;
+  }
+}
+
+/* slider cards background  */
+.employee_details {
+  background-color: #E1E2F6;
+}
+
+.employee_details .slider-cards-count {
+  background-color: #FCF9FF;
+}
+
+.recruitment_tracking {
+  background-color: #F8EFE2;
+}
+
+.recruitment_tracking .slider-cards-count {
+  background-color: #FAF5EC;
+}
+
+.expenses_history {
+  background-color: #EFF7E2;
+}
+
+.expenses_history .slider-cards-count {
+  background-color: #F6FBEE;
+}
+
+.schedules_management {
+  background-color: #F8EFE2;
+}
+
+.schedules_management .slider-cards-count {
+  background-color: #FAF5EC;
+}
+/*  */
+
+
+
+.main-content-overall-height {
+  height: calc(100vh - 5.8rem);
+  overflow-y: scroll;
+}
+
+.welcome-image-section {
+  height: 13rem;
+  position: relative;
+}
+
+.welcome-image-section img {
+  width: 100%;
+  height: 12rem;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.welcome-image-section .welcome-image-section-content {
+  position: absolute;
+  top: 4rem;
+  left: 2rem;
+  color: #fff;
+}
+
+.nav-adra-font-size {
+  font-size: 1rem;
+}
+
+.navnar-height {
+  height: var(--nav-height);
+  background-color: #fff;
+}
+
+.background-clr {
+  background-color: var(--background-color);
+  height: calc(100vh - var(--nav-height));
+  overflow-y: scroll;
+}
+
+.hr-page-background-clr {
+  background-color: var(--background-color);
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+.login-form {
+  background-color: #d3d3d31a;
+}
+
+.sign-in-total-height {
+  height: var(--total-height);
+}
+
+.btn-brand-color {
+  background-color: var(--brand-bg-color) !important;
+  color: var(--brand-text-color) !important;
+}
+
+.pointer-cursor {
+  cursor: pointer;
+}
+
+.eye-open-icon {
+  position: absolute;
+  top: 1.2rem;
+  right: 1rem;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.eye-close-icon {
+  position: absolute;
+  top: 1.2rem;
+  right: 1rem;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.form-control:focus {
+  border-color: rgba(128, 128, 128, 0.228) !important;
+  outline: 0;
+  box-shadow: none !important;
+}
+
+
+/* Nav */
+.notification:hover .notification-content {
+  opacity: 1;
+  visibility: visible;
+}
+
+.notification-content {
+  position: absolute;
+  top: 3.5rem;
+  right: 2rem;
+  height: 32rem;
+  border-radius: 1.3rem;
+  background: var(--notification--background);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1030;
+  transition: all .2s linear;
+  overflow: hidden;
+}
+
+.notification-content {
+  width: 25rem;
+}
+
+
+.profile-content {
+  position: absolute;
+  top: 3.5rem;
+  right: 2rem;
+  height: 30rem;
+  border-radius: 1.3rem;
+  background: var(--notification--background);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1030;
+  transition: all .2s linear;
+  overflow: hidden;
+}
+
+.profile:hover .profile-content {
+  opacity: 1;
+  visibility: visible;
+}
+
+.profile-content {
+  width: 21rem;
+}
+
+.profile-color-gap {
+  background-color: rgb(138, 193, 255);
+  height: 5rem;
+  width: 100%;
+}
+
+.profile-absolute-image-two {
+  position: absolute;
+  bottom: -1.7rem;
+  left: 42%;
+}
+
+.profile-absolute-edit-icon {
+  position: absolute;
+  bottom: .5rem;
+  right: 10%;
+}
+
+.profile-content-absolute-height {
+  height: calc(30rem - 10rem);
+}
+
+/*  */
+
+.card.active {
+  background-color: var(--developer-cards-active-card-color) !important;
+  color: #000;
+  transition: all 0.3s ease-in-out;
+}
+
+.table-section {
+  font-size: .9rem;
+  height: 28rem;
+  overflow-y: scroll;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: #5f5f5f !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.cards-overflow-webkit {
+  overflow: scroll !important;
+}
+
+
+/* calender  */
+.small-calender-column,
+.large-calender-column {
+  width: 14.2%;
+  height: 3rem;
+}
+
+.date-today {
+  color: #fff;
+  background-color: rgb(56, 138, 239);
+}
+
+.date-selected {
+  color: rgba(56, 138, 239, 0.866);
+  background-color: rgba(56, 138, 239, 0.259);
+}
+
+.calendar-title-min-height {
+  height: 4.8rem;
+  overflow-y: scroll;
+}
+
+.calendar-modal-absolute {
+  position: absolute;
+  left: 43rem;
+  top: 30%;
+  border-radius: 12px !important;
+}
+
+.calendar-modal-content {
+  background-color: #fff;
+  border-radius: 12px;
+}
+
+input[type="text"]:focus {
+  outline: none;
+}
+
+.calender-color {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.absolute-colander-dot {
+  position: absolute;
+  bottom: .4rem;
+  left: 45%;
+  height: .3rem;
+  width: .3rem;
+  border-radius: 50%;
+  background-color: rgb(0, 255, 42);
+}
+
+/*  */
+
+.navLink-active.active {
+  padding-bottom: .5rem;
+  border-bottom: 3px solid rgb(0, 183, 255);
+  border-radius: .2rem;
+}
+
+.navLink-active button:hover {
+  color: black !important;
+}
+
+.employee-page-table-height,
+.applicant-page-table-height {
+  height: 47rem;
+
+}
+
+.employee-page-table-height .card,
+.applicant-page-table-height .card {
+  overflow: scroll;
+}
+
+.chart-container {
+  border-radius: 8px;
+  border: 1px #f3f3f3fd;
+  background: #FFF;
+  overflow: hidden;
+}
+
+.chat-person-card {
+  background-color: #e7e7e709;
+  transition: all .1s linear;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.106);
+}
+
+.chat-person-card:hover {
+  background-color: #f6f9fc;
+  color: rgb(56, 94, 201);
+
+}
+
+
+
+.table{
+  vertical-align: middle !important;
+}
+
+.ticket-permission-approved {
+  background-color: #e7f7ef;
+  color: #0caf60;
+  font-size: .9rem;
+}
+.ticket-border-permission-approved{
+  border-left: 2px solid #120DE7;
+  padding: .7rem;
+}
+
+.ticket-permission-pending {
+  background-color: #fff8df;
+  color: #c9a10d;
+  font-size: .9rem;
+}
+.ticket-border-permission-pending{
+  border-left: 2px solid #EF8535;
+  padding: .7rem;
+}
+
+.ticket-permission-rejected {
+  background-color: #fff0f0;
+  color: #fd6a6a;
+  font-size: .9rem;
+}
+.ticket-border-permission-rejected{
+  border-left: 2px solid #D20000;
+  padding: .7rem;
+}
+
+.hr-home-calender-widget {
+  height: 40rem;
+}
+
+.hr-home-calender-widget .card {
+  overflow-y: scroll;
+}
+
+.applicant-table-Overflow {
+  overflow-y: scroll;
+}
+
+.applicant-tracking-card-height {
+  height: 39rem;
+}
+
+/* media query  */
+@media (max-width:586px) {
+  .large-calender-column {
+    width: 100% !important;
+    height: 10rem;
+  }
+}
+
+@media (min-width:586px) {
+  .large-calender-column {
+    width: 50% !important;
+    height: 10rem;
+  }
+}
+
+@media (min-width:786px) {
+  .large-calender-column {
+    width: 33.33% !important;
+    height: 10rem;
+  }
+}
+
+@media (max-width:992px) {
+  .hr-home-slider-cards {
+    height: 11rem !important;
+  }
+
+  .small-calender-date-today {
+    color: #fff;
+    background-color: rgb(56, 138, 239);
+    border-radius: 50%;
+    padding: .8rem 1rem;
+  }
+
+  .small-calender-date-selected {
+    color: rgba(56, 138, 239, 0.866);
+    background-color: rgba(56, 138, 239, 0.259);
+    border-radius: 50%;
+    padding: .8rem 1rem;
+  }
+
+  .small-calender-date-today-double-dight {
+    color: #fff;
+    background-color: rgb(56, 138, 239);
+    border-radius: 50%;
+    padding: .7rem .7rem;
+  }
+
+  .small-calender-date-selected-double-dight {
+    color: rgba(56, 138, 239, 0.866);
+    background-color: rgba(56, 138, 239, 0.259);
+    border-radius: 50%;
+    padding: .7rem .7rem;
+  }
+
+  .right-side-cntent-overall-height {
+    height: 90vh;
+    overflow-y: hidden;
+  }
+
+  .hr-home-calender-min-height {
+    height: 27.5rem !important;
+    overflow: scroll;
+  }
+
+  .hr-home-ticket-min-height {
+    height: calc(100vh - 33rem) !important;
+    overflow-y: scroll;
+  }
+
+}
+
+.home-attendance-min-card-height,
+.home-employee-min-card-height{
+  height: 27.5rem !important;
+}
+
+.home-attendance-details-min-card-height{
+  height: 27.5rem !important;
+  /* overflow-y: scroll; */
+}
+
+@media (min-width:992px) {
+  .small-calender-date-today {
+    color: #fff;
+    background-color: rgb(56, 138, 239);
+    border-radius: 50%;
+    padding: .8rem 1rem;
+  }
+
+  .small-calender-date-selected {
+    color: rgba(56, 138, 239, 0.866);
+    background-color: rgba(56, 138, 239, 0.259);
+    border-radius: 50%;
+    padding: .7rem .9rem;
+  }
+
+  .small-calender-date-today-double-dight {
+    color: #fff;
+    background-color: rgb(56, 138, 239);
+    border-radius: 50%;
+    padding: .6rem;
+  }
+
+  .small-calender-date-selected-double-dight {
+    color: rgba(56, 138, 239, 0.866);
+    background-color: rgba(56, 138, 239, 0.259);
+    border-radius: 50%;
+    padding: .6rem;
+  }
+
+  .hr-home-slider-cards {
+    height: 11rem;
+  }
+
+  .large-calender-column {
+    width: 14.2% !important;
+    height: 10rem;
+  }
+
+  .hr-home-calender-min-height {
+    height: 24.5rem !important;
+    overflow: scroll;
+  }
+
+  .right-side-cntent-overall-height {
+    height: 90vh;
+    overflow-y: hidden;
+  }
+
+  .hr-home-ticket-min-height {
+    height: calc(100vh - 31rem) !important;
+    overflow-y: scroll;
+  }
+}
+
+@media (min-width:1200px) {
+  .right-side-cntent-overall-height {
+    height: 100vh;
+    overflow-y: scroll;
+  }
+}
+
+@media (min-width:1300px) {
+  .hr-home-slider-cards {
+    height: 11rem;
+  }
+
+  .large-calender-column {
+    width: 14.2% ;
+    height: 10rem;
+  }
+}
+
+@media (min-width:1440px) {
+  .hr-home-scrollbar {
+    overflow-y: scroll;
+    height: 100%;
+  }
+
+  .slick-prev,
+  .slick-next {
+    display: none !important;
+  }
+}
+
+
+.percentage-absolute-one{
+  position: absolute;
+  bottom: -2.7rem;
+  left: 0;
+}
+.percentage-absolute-two{
+  position: absolute;
+  bottom: -2.7rem;
+  right: 0;
+}
+
+.fulltime{
+  display: inline-block;
+  background-color: rgb(72, 59, 214);
+  width: 13px;
+  height: 13px;
+  border-radius: 3px;
+  margin-right: .4rem;
+}
+
+.probation{
+  display: inline-block;
+  background-color: rgb(167, 177, 250);
+  width: 13px;
+  height: 13px;
+  border-radius: 3px;
+  margin-right: .4rem;
+}
+
+.intern{
+  display: inline-block;
+  background-color: rgb(232, 235, 254);
+  width: 13px;
+  height: 13px;
+  border-radius: 3px;
+  margin-right: .4rem;
+}
+
+.employer-card{
+  border-color: rgba(128, 128, 128, 0.156) !important;
+}
+
+.pdf-btn{
+  position: absolute;
+  top: -1rem;
+  right: 0;
+}
