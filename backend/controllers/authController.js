@@ -4,49 +4,109 @@ const sendEmail = require("../utils/email");
 const ErrorHandler = require("../utils/errorHandling");
 const sendToken = require("../utils/jwt");
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 
 exports.registerUser = catchAsyncError(async (req, res, next) => {
-    console.log(req)
-    res.status(200).json({
-        success: true,
-        message: 'logout successfull'
-    })
-    // const { name, username, email, password, avatar, role } = req.body;
-    // const user = await User.findOne({ username })
+    const { body, file } = req
 
-    // if (user) {
-    //     return next(new ErrorHandler("Username already exist", 401));
-    // } else {
-    //     const newUser = await User.create({ name, username, email, password, avatar, role });
-    //     sendToken(newUser, 201, res);
-    // }
+    if (!file) {
+        return next(new ErrorHandler("Profile image Not found", 401));
+    }
+
+    const { name, username, email, password, role } = body;
+    const user = await User.findOne({ username })
+
+    if (user) {
+        return next(new ErrorHandler("Username already exist", 401));
+    } else {
+        const avatar = file.originalname;
+        const newUser = await User.create({ name, username, email, password, avatar, role });
+        sendToken(newUser, 201, res);
+
+    }
 });
 
+exports.getUser = catchAsyncError(async (req, res, next) => {
+    const users = await User.find({}).select('+password')
+
+    res.status(200).json({
+        success: true,
+        data: users,
+        message: 'user list fetched successfull'
+    })
+})
 
 exports.loginUser = catchAsyncError(async (req, res, next) => {
     const { username, password } = req.body;
     if (!username || !password) {
-        return next(new ErrorHandler("please enter username & password", 401));
+        return next(new ErrorHandler("please enter username & password", 401,1));
     }
 
     //finding user data in database
     const user = await User.findOne({ username }).select('+password');
 
     if (!user) {
-        return next(new ErrorHandler("User not found", 401));
+        return next(new ErrorHandler("User not found", 401,1));
     }
 
     if (!await user.isValidPassword(password)) {
-        return next(new ErrorHandler("Invalid username or password", 401));
+        return next(new ErrorHandler("Invalid username or password", 401,1));
     }
 
-    sendToken(user, 201, res);
+    //creating jwt token
+    const token = user.getJwtToken();
+    const refreshToken = user.getRefreshJwtToken()
+
+    //setting cookies
+    const options = {
+        httpOnly: true,
+        sameSite: 'strict'
+    }
+
+    res.status(200).cookie('token', token, options).cookie('refreshToken', refreshToken, options).json({
+        success: true,
+        error_code:0,
+        data: {
+            data: user,
+            message: "Login successful"
+        }
+    })
+
+})
+
+exports.resetJwtToken = catchAsyncError(async (req, res, next) => {
+    const { refreshToken } = req.cookies;
+    if (!refreshToken) {
+        return next(new ErrorHandler("No refresh token provided", 401));
+    }
+
+    const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id)
+
+
+    const token = user.getJwtToken();
+
+    //setting cookies
+    const options = {
+        httpOnly: true,
+        sameSite: 'strict'
+    }
+
+    res.status(200).cookie('token', token, options).json({
+        success: true,
+        message: "refresh token updated successfully"
+    })
 })
 
 exports.logOutUser = (req, res, next) => {
     res.cookie('token', null, {
-        expires: new Date(Date.now()),
-        httpOnly: true
+        httpOnly: true,
+        expires: new Date(Date.now())
+    })
+
+    res.cookie('refreshToken', null, {
+        httpOnly: true,
+        expires: new Date(Date.now())
     })
 
     res.status(200).json({

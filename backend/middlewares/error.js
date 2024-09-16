@@ -4,9 +4,12 @@ module.exports = (err, req, res, next) => {
     if (process.env.NODE_ENV === "development") {
         res.status(err.statusCode).json({
             success: false,
-            message: err.message,
-            stack: err.stack,
-            error: err
+            data:{
+                message: err.message,
+                stack: err.stack,
+                error_code: err.errorCode,
+                data:{}
+            }
         })
     }
 
@@ -42,7 +45,11 @@ module.exports = (err, req, res, next) => {
          
         res.status(err.statusCode).json({
             success: false,
-            message: error.message || 'Internal Server Error'
+            data:{
+                message: error.message || 'Internal Server Error',
+                error_code: err.errorCode,
+                data:{}
+            } 
         })
     }
 }

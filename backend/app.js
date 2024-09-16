@@ -8,16 +8,17 @@ const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 app.use(cors())
 
-app.use(express.json());
-app.use(bodyParser.json()) // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+ 
 
-// const products = require('./routes/product');
 const userRouter = require('./routes/auth');
+const scheduleRouter = require('./routes/scheduleRoutes');
 
-//Route paths
-// app.use('/api/v1',products);
+
+//Route paths 
 app.use('/api/v1',userRouter);
+app.use('/api/v1',scheduleRouter)
 
 //handling errors should be used in last
 app.use(errorMiddleWare)

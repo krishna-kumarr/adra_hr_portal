@@ -1,21 +1,22 @@
-const sendToken = (user,statusCode,res)=>{
+const sendToken = (user, statusCode, res) => {
 
     //creating jwt token
     const token = user.getJwtToken();
+    const refreshToken = user.getRefreshJwtToken()
 
     //setting cookies
     const options = {
-        expire: new Date(
-            Date.now() + process.env.COOKIE_EXPIRES_TIME * 20 * 60 * 60 * 1000
-        ),
         httpOnly: true,
+        sameSite: 'strict'
     }
 
-    res.status(statusCode).cookie('token', token ,options).json({
+    res.status(statusCode).cookie('token', token, options).cookie('refreshToken', refreshToken, options).json({
         success: true,
-        user,
-        token,
-        message: "User registered successfully"
+        data: {
+            data: user,
+            message: "User registered successfully"
+        }
+
     })
 }
 

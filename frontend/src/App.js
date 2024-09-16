@@ -17,18 +17,20 @@ import Shortlisted from './Views/Hr/Applicant_tracking/Shortlisted';
 import Pending from './Views/Hr/Applicant_tracking/Pending';
 import Recommended from './Views/Hr/Applicant_tracking/Recommended';
 import ApplicantDetails from './Views/Hr/Applicant_tracking/ApplicantDetails';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
+      <Toaster/>
 
+      <Routes>
         <Route index element={<Login />} />
 
         <Route path="/hr_dashboard" element={<HrAuth />}>
           <Route path="home" element={<HrMainLayout />}>
             <Route index element={<HrHome />} />
-
+            
             <Route path="employee_details" element={<EmployeesListingPage />}>
               <Route index exact element={<EmployeeFullTime />} />
               <Route path="probation" element={<EmployeeProbation />} />

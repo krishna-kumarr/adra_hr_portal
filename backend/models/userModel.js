@@ -58,6 +58,10 @@ userSchema.methods.getJwtToken = function(){
     })
 } 
 
+userSchema.methods.getRefreshJwtToken = function(){
+    return jwt.sign({id: this.id}, process.env.JWT_SECRET)
+} 
+
 userSchema.methods.isValidPassword = async function(enteredPassword){
     return await bycrypt.compare(enteredPassword, this.password)
 }

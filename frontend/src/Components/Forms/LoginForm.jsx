@@ -2,24 +2,40 @@ import React, { useState } from 'react'
 import { HiEyeOff } from 'react-icons/hi'
 import { HiMiniEye } from 'react-icons/hi2'
 import { Link, useNavigate } from 'react-router-dom'
+import axiosInstance from '../../Services/axiosInstance'
 
 const LoginForm = () => {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const [eyeOpenIcon, setEyeOpenIcon] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [userDetails, setUserDetails] = useState({
-      username: '',
-      password: ''
+        username: '',
+        password: ''
     })
-  
-    const handleSignIn = () => {
-      if (userDetails.username && userDetails.password) {
-        setError(false)
-        
-        navigate("/hr_dashboard")
-      } else {
-        setError(true)
-      }
+
+    const handleSignIn = async () => {
+        if (userDetails.username && userDetails.password) {
+            setError(false)
+            setLoading(true)
+            const data = {
+                username: userDetails.username,
+                password: userDetails.password
+            }
+
+            try {
+                const res = await axiosInstance.post("/login", data)
+                if (res.data.error_code === 0) {
+                    navigate("/hr_dashboard")
+                }
+                setLoading(false)
+            } catch (err) {
+                setLoading(false)
+                console.log(err)
+            }
+        } else {
+            setError(true)
+        }
     }
 
     return (
@@ -48,7 +64,17 @@ const LoginForm = () => {
                     <Link to="/forgot-password" className='text-muted'>Forgot Password</Link>
                 </div>
 
-                <button type="button" class="btn btn-brand-color w-100 py-3 mt-3 fw-bold" onClick={handleSignIn}>LogIn</button>
+                {
+                    loading ?
+                        <button type="button" class="btn btn-brand-color w-100 py-3 mt-3 fw-bold">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </button>
+                        :
+                        <button type="button" class="btn btn-brand-color w-100 py-3 mt-3 fw-bold" onClick={handleSignIn}>LogIn</button>
+
+                }
             </div>
         </form>
     )
