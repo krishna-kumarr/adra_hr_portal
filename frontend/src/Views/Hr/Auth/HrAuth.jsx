@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from 'react'
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom'
+import HrMainLayout from '../Resuable_comps/HrMainLayout';
 
-const HrAuth = () => { 
-    const [isAuthenticatedUser, setIsAuthenticatedUser] = useState(false);
-    const pageRender = useNavigate();
-    const location = useLocation();
+const HrAuth = () => {
+    const navigate = useNavigate();
+    const { isAuthenticated, loading } = useSelector(state => state.userState)
 
-    useEffect(() => {
-        const pathname = location.pathname
-
-        if (pathname === "/hr_dashboard" || pathname === "/hr_dashboard/") {
-            pageRender("/hr_dashboard/home")
+    useEffect(() => { 
+        if (!isAuthenticated && !loading) {
+            navigate('/', { replace: true })
         }
-    }, [])
+    }, [isAuthenticated,loading])
 
 
     return (
         <>
-            <Outlet />
+            <HrMainLayout />
         </>
     )
 }

@@ -53,7 +53,6 @@ const CalenderSlice = createSlice({
         },
 
         setSavedEventsDupli: (state, action) => {
-            // Update the labels state
             const uniqueLabels = [...new Set(action.payload.map((evt) => evt.label))];
             const label = uniqueLabels.map((label) => {
                 const currentLabel = state.labels.find((lbl) => lbl.label === label);

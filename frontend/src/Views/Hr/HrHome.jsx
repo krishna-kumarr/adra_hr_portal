@@ -36,7 +36,7 @@ const HrHome = () => {
             text: "text",
             statusIcon: Images.allEmployers,
             count: 10,
-            pageLink: "/hr_dashboard/home/employee_details",
+            pageLink: "/hr_dashboard/employee_details",
             cardIcon: [
                 { icon: <TbUsersGroup className='fs-5'/>, count: 15 },
                 { icon: <GoPeople className='fs-5'/>, count: 10 },
@@ -51,7 +51,7 @@ const HrHome = () => {
             text: "text",
             statusIcon: Images.requirementIcon,
             count: 4,
-            pageLink: "/hr_dashboard/home/applicant_tracking",
+            pageLink: "/hr_dashboard/applicant_tracking",
             cardIcon: [
                 { icon: <BiNotepad className='fs-5'/>, count: 15 },
                 { icon: <PiUserList className='fs-5'/>, count: 15 },
@@ -65,7 +65,7 @@ const HrHome = () => {
             text: "text",
             statusIcon: Images.expenseHitorIcon,
             count: 4,
-            pageLink: "/hr_dashboard/home/expense_history",
+            pageLink: "/hr_dashboard/expense_history",
             cardIcon: [
                 { icon: <IoWalletOutline className='fs-5'/>, count: "15k" },
                 { icon: <TbCreditCardRefund className='fs-5'/>, count: "15k" },
@@ -79,7 +79,7 @@ const HrHome = () => {
             text: "text",
             statusIcon: Images.scheduleManagementIcon,
             count: 4,
-            pageLink: "/hr_dashboard/home/schedules",
+            pageLink: "/hr_dashboard/schedules",
             cardIcon: [
                 { icon: <FaRegCalendarAlt className='fs-5'/>, count: 15 },
                 { icon: <TbCalendarTime className='fs-5'/>, count: 15 },

@@ -2,9 +2,10 @@ import dayjs from "dayjs";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateDaySelected, updateSelectedEvent, updateShowEventModal } from "../../Storage/CalenderSlice/CalenderSlice";
+import { handleDaySelected, handleupdateShowEventModal } from "../../Storage/Action/hrCalenderAction";
 
 export default function Day({ day, rowIdx }) {
-  const CalenderSlice = useSelector((state) => state.calender);
+  const CalenderSlice = useSelector((state) => state.hrCalenderState);
   const dispatch = useDispatch();
 
 
@@ -36,8 +37,8 @@ export default function Day({ day, rowIdx }) {
     const format = "DD-MM-YY";
     const currDay = dayclicked.format(format);
 
-    dispatch(updateDaySelected(currDay));
-    dispatch(updateShowEventModal(true));
+    dispatch(handleDaySelected(currDay));
+    dispatch(handleupdateShowEventModal(true));
   }
 
   return (

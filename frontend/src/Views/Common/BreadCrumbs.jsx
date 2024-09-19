@@ -10,15 +10,15 @@ const BreadCrumbs = () => {
         .filter(crumbs => crumbs !== '')
         .map((crumb, crumbIndex) => {
             currentLink += (`/${crumb}`)
-
+            const crumbsLength = location.pathname.split('/')
             return (
-                crumb !== 'hr_dashboard' ?
+                crumbsLength.length > 2 ?
                     <li className={`breadcrumb-item ${crumbIndex === location.pathname.split('/').length - 2 ? 'active' : ''}`} aria-current="page" key={crumb}>
                         {
                             crumbIndex === location.pathname.split('/').length - 2 ?
                                 crumb
                                 :
-                                <Link to={currentLink}>{crumb}</Link>
+                                <Link to={currentLink}>{ crumb === 'hr_dashboard' ? "home" : crumb}</Link>
                         }
                     </li>
 

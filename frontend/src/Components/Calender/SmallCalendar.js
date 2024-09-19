@@ -5,30 +5,24 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { updateDaySelected, updateSmallCalendarMonth } from "../../Storage/CalenderSlice/CalenderSlice";
+import { handleCurrentMonthArray, handleDaySelected, handleNextMonthAction, handlePrevMonthAction, hanldeupdateSmallCalendarMonth } from "../../Storage/Action/hrCalenderAction";
 
 export default function SmallCalendar() {
+  const CalenderSlice = useSelector((state) => state.hrCalenderState);
   const location = useLocation();
-  const [currentMonthIdx, setCurrentMonthIdx] = useState(dayjs().month());
-  const [currentMonth, setCurrentMonth] = useState(getMonth());
-
-  const CalenderSlice = useSelector((state) => state.calender);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    setCurrentMonth(getMonth(currentMonthIdx));
-  }, [currentMonthIdx]);
-
-  useEffect(() => {
-    setCurrentMonthIdx(CalenderSlice.monthIndex);
-  }, [CalenderSlice.monthIndex]);
-
   function handlePrevMonth() {
-    setCurrentMonthIdx(currentMonthIdx - 1);
+    dispatch(handlePrevMonthAction(CalenderSlice.monthIndex - 1));
   }
-  
+
   function handleNextMonth() {
-    setCurrentMonthIdx(currentMonthIdx + 1);
+    dispatch(handleNextMonthAction(CalenderSlice.monthIndex + 1));
   }
+
+  useEffect(() => {
+    dispatch(handleCurrentMonthArray(getMonth(CalenderSlice.monthIndex)))
+  }, [CalenderSlice.monthIndex]);
 
   function getDayClass(day) {
     const format = "DD-MM-YY";
@@ -63,8 +57,8 @@ export default function SmallCalendar() {
     const format = "DD-MM-YY";
     const currDay = selecDay.format(format);
 
-    dispatch(updateSmallCalendarMonth(currentMonthIdx));
-    dispatch(updateDaySelected(currDay))
+    dispatch(hanldeupdateSmallCalendarMonth(CalenderSlice.monthIndex));
+    dispatch(handleDaySelected(currDay))
   }
 
   const hanldeButton = (day, idx) => {
@@ -94,7 +88,7 @@ export default function SmallCalendar() {
     <div>
       <header className="d-flex justify-content-between align-items-center mb-3">
         <p className="text-secondary fw-bold mb-2">
-          {dayjs(new Date(dayjs().year(), currentMonthIdx)).format(
+          {dayjs(new Date(dayjs().year(), CalenderSlice.monthIndex)).format(
             "MMMM YYYY"
           )}
         </p>
@@ -109,15 +103,18 @@ export default function SmallCalendar() {
       </header>
 
       <div className="w-100 d-flex flex-wrap text-center">
-        {currentMonth[0].map((day, i) => (
-          <span key={i} className="small-calender-column row align-items-center justify-content-center">
-            {day.format("dd").charAt(0)}
-          </span>
-        ))}
+        {CalenderSlice.currentMonthArray.length > 0 ?
+          CalenderSlice.currentMonthArray[0].map((day, i) => (
+            <span key={i} className="small-calender-column row align-items-center justify-content-center">
+              {day.format("dd").charAt(0)}
+            </span>
+          ))
+          :
+          null}
       </div>
 
       <div className="w-100 d-flex flex-wrap ">
-        {currentMonth.map((row, i) => (
+        {CalenderSlice.currentMonthArray.map((row, i) => (
           <React.Fragment key={i}>
             {row.map((day, idx) => {
               return hanldeButton(day, idx)

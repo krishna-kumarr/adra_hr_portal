@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Images from '../../../Utils/Images';
 
 const HrRightsideCalender = () => {
-    const CalenderSlice = useSelector((state) => state.calender)
+    // const CalenderSlice = useSelector((state) => state.calender)
     const navigate = useNavigate();
 
     const [todaysEvent, setTodaysEvent] = useState([]);
@@ -15,18 +15,18 @@ const HrRightsideCalender = () => {
     const [eventDate, setEventDate] = useState('')
 
 
-    useEffect(() => {
-        const format = "DD-MM-YY";
-        const slcDay = CalenderSlice.daySelected && CalenderSlice.daySelected;
-        const events = CalenderSlice.savedEventsDupli.filter((evt) => evt.day === slcDay);
-        const nowDay = dayjs().format(format);
+    // useEffect(() => {
+    //     const format = "DD-MM-YY";
+    //     const slcDay = CalenderSlice.daySelected && CalenderSlice.daySelected;
+    //     const events = CalenderSlice.savedEventsDupli.filter((evt) => evt.day === slcDay);
+    //     const nowDay = dayjs().format(format);
 
-        console.log(dayjs().day())
+    //     console.log(dayjs().day())
 
-        setEventDay(slcDay === nowDay ? `Todays Event` : `Events on ${slcDay}`)
-        setTodaysEvent(events)
+    //     setEventDay(slcDay === nowDay ? `Todays Event` : `Events on ${slcDay}`)
+    //     setTodaysEvent(events)
 
-    }, [CalenderSlice.daySelected, CalenderSlice.savedEventsDupli])
+    // }, [CalenderSlice.daySelected, CalenderSlice.savedEventsDupli])
 
     const dynamicEventClass = (label) => {
         switch (label) {

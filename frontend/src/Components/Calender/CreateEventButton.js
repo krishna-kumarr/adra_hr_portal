@@ -1,15 +1,19 @@
 import React from "react";
 import plusImg from "../assets/plus.svg";
-import { useDispatch } from "react-redux";
-import { updateShowEventModal } from "../../Storage/CalenderSlice/CalenderSlice";
+import { useDispatch } from "react-redux"; 
+import { handleupdateShowEventModal } from "../../Storage/Action/hrCalenderAction";
 
 
 export default function CreateEventButton() {
+  const CalenderSlice = useSelector((state) => state.hrCalenderState);
   const dispatch = useDispatch();
 
+  const handleEventModal = () =>{
+    dispatch(handleupdateShowEventModal(true))
+  }
   return (
     <button
-      onClick={() => dispatch(updateShowEventModal(true))}
+      onClick={handleEventModal}
       className="btn border-2 shadow rounded-2"
     >
       <img src={plusImg} alt="create_event" className="w-7 h-7" />

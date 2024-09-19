@@ -4,7 +4,7 @@ import { updateLabels } from "../../Storage/CalenderSlice/CalenderSlice";
 
 export default function Labels() {
 
-  const CalenderSlice = useSelector((state) => state.calender);
+  const CalenderSlice = useSelector((state) => state.hrCalenderState);
   const dispatch = useDispatch();
 
   const handleUncheckLabels = (index) => {
@@ -12,7 +12,6 @@ export default function Labels() {
       return index === i ? { ...v, checked: !v.checked } : v
     }) 
     dispatch(updateLabels(updateLabelChecked))
-   
   }
 
   return (

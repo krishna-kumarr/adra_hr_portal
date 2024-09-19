@@ -27,51 +27,33 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
 });
 
 exports.getUser = catchAsyncError(async (req, res, next) => {
-    const users = await User.find({}).select('+password')
+    const users = await User.findById(req.user.id)
 
     res.status(200).json({
         success: true,
         data: users,
-        message: 'user list fetched successfull'
+        message: 'user details fetched successfull'
     })
 })
 
 exports.loginUser = catchAsyncError(async (req, res, next) => {
     const { username, password } = req.body;
     if (!username || !password) {
-        return next(new ErrorHandler("please enter username & password", 401,1));
+        return next(new ErrorHandler("please enter username & password", 401));
     }
 
     //finding user data in database
     const user = await User.findOne({ username }).select('+password');
 
     if (!user) {
-        return next(new ErrorHandler("User not found", 401,1));
+        return next(new ErrorHandler("User not found", 401));
     }
 
     if (!await user.isValidPassword(password)) {
-        return next(new ErrorHandler("Invalid username or password", 401,1));
+        return next(new ErrorHandler("Invalid username or password", 401));
     }
 
-    //creating jwt token
-    const token = user.getJwtToken();
-    const refreshToken = user.getRefreshJwtToken()
-
-    //setting cookies
-    const options = {
-        httpOnly: true,
-        sameSite: 'strict'
-    }
-
-    res.status(200).cookie('token', token, options).cookie('refreshToken', refreshToken, options).json({
-        success: true,
-        error_code:0,
-        data: {
-            data: user,
-            message: "Login successful"
-        }
-    })
-
+    sendToken(user, 201, res);
 })
 
 exports.resetJwtToken = catchAsyncError(async (req, res, next) => {
@@ -83,19 +65,7 @@ exports.resetJwtToken = catchAsyncError(async (req, res, next) => {
     const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
     const user = await User.findById(decoded.id)
 
-
-    const token = user.getJwtToken();
-
-    //setting cookies
-    const options = {
-        httpOnly: true,
-        sameSite: 'strict'
-    }
-
-    res.status(200).cookie('token', token, options).json({
-        success: true,
-        message: "refresh token updated successfully"
-    })
+    sendToken(user, 201, res);
 })
 
 exports.logOutUser = (req, res, next) => {

@@ -1,30 +1,30 @@
 import dayjs from "dayjs";
-import React, { useContext } from "react";
+import React from "react";
 import Images from "../../Utils/Images";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import Labels from "./Labels";
-import { useDispatch, useSelector } from "react-redux";
-import { updatemonthIndex } from "../../Storage/CalenderSlice/CalenderSlice";
+import { useDispatch, useSelector } from "react-redux"; 
+import { handleNextMonthAction, handlePrevMonthAction, handleResetAction } from "../../Storage/Action/hrCalenderAction";
 
 export default function CalendarHeader() {
-  const CalenderSlice = useSelector((state) => state.calender);
+  const CalenderSlice = useSelector((state) => state.hrCalenderState);
   const dispatch = useDispatch();
 
   function handlePrevMonth() {
-    dispatch(updatemonthIndex(CalenderSlice.monthIndex - 1));
+    dispatch(handlePrevMonthAction(CalenderSlice.monthIndex - 1));
   }
   
   function handleNextMonth() {
-    dispatch(updatemonthIndex(CalenderSlice.monthIndex + 1));
+    dispatch(handleNextMonthAction(CalenderSlice.monthIndex + 1));
   }
 
   function handleReset() {
-    dispatch(updatemonthIndex(
-      CalenderSlice.monthIndex === dayjs().month()
-        ? CalenderSlice.monthIndex + Math.random()
-        : dayjs().month())
-    );
+    const reset =  CalenderSlice.monthIndex === dayjs().month()
+    ? CalenderSlice.monthIndex + Math.random()
+    : dayjs().month()
+
+    dispatch(handleResetAction(reset));
   }
   return (
     <>
@@ -67,7 +67,7 @@ export default function CalendarHeader() {
       </div>
 
       <div className="col-12 col-md-6 row">
-        <Labels />
+        {/* <Labels /> */}
       </div>
     </>
   );

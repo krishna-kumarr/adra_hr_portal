@@ -1,42 +1,41 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify';
 import { HiEyeOff } from 'react-icons/hi'
 import { HiMiniEye } from 'react-icons/hi2'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import axiosInstance from '../../Services/axiosInstance'
+import { login,clearAuthError } from '../../Storage/Action/authAction';
 
 const LoginForm = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { loading, error, isAuthenticated } = useSelector(state => state.userState);
+
     const [eyeOpenIcon, setEyeOpenIcon] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
     const [userDetails, setUserDetails] = useState({
         username: '',
         password: ''
-    })
+    });
 
-    const handleSignIn = async () => {
-        if (userDetails.username && userDetails.password) {
-            setError(false)
-            setLoading(true)
-            const data = {
-                username: userDetails.username,
-                password: userDetails.password
-            }
 
-            try {
-                const res = await axiosInstance.post("/login", data)
-                if (res.data.error_code === 0) {
-                    navigate("/hr_dashboard")
-                }
-                setLoading(false)
-            } catch (err) {
-                setLoading(false)
-                console.log(err)
-            }
-        } else {
-            setError(true)
-        }
+    const handleSignIn = () => {
+        dispatch(login(userDetails.username, userDetails.password))
     }
+
+    useEffect(()=>{
+        if(isAuthenticated){
+            navigate('/hr_dashboard', { replace: true })
+        }
+
+        if (error) {
+            toast(error, {
+                position: "top-right",
+                type: 'error',
+                onOpen: () => { dispatch(clearAuthError) }
+            })
+            return
+        }
+    },[isAuthenticated,error,loading])
 
     return (
         <form className="col-lg-5 d-inline-flex align-items-center pe-lg-5">

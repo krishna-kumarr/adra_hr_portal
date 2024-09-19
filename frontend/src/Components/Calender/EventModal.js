@@ -7,6 +7,8 @@ import { TiTickOutline } from "react-icons/ti";
 import Modal from 'react-bootstrap/Modal';
 import { useDispatch, useSelector } from "react-redux";
 import { setSavedEventsDupli, updateSavedEvents, updateShowEventModal } from "../../Storage/CalenderSlice/CalenderSlice";
+import { disConnectSocket, getSocket } from "../../socket";
+import { handleupdateShowEventModal } from "../../Storage/Action/hrCalenderAction";
 
 const labelsClasses = [
   "info",
@@ -17,14 +19,14 @@ const labelsClasses = [
 ];
 
 export default function EventModal() {
-  const CalenderSlice = useSelector((state) => state.calender);
+  const CalenderSlice = useSelector((state) => state.hrCalenderState);
   const dispatch = useDispatch();
 
   const [title, setTitle] = useState(
     CalenderSlice.selectedEvent ? CalenderSlice.selectedEvent.title : ""
   );
 
-  const [time,setTime] = useState(
+  const [time, setTime] = useState(
     CalenderSlice.selectedEvent ? CalenderSlice.selectedEvent.time : ""
   );
 
@@ -43,13 +45,13 @@ export default function EventModal() {
       title,
       description,
       label: selectedLabel,
-      time:time,
+      time: time,
       day: CalenderSlice.daySelected.valueOf(),
       id: CalenderSlice.selectedEvent ? CalenderSlice.selectedEvent.id : Date.now(),
     };
 
-    if (title !== '' && description !== '' && time ) {
-         
+    if (title !== '' && description !== '' && time) {
+
       if (CalenderSlice.selectedEvent) {
         const updateEvents = CalenderSlice.savedEvents.map((evt) =>
           evt.id === calendarEvent.id ? calendarEvent : evt
@@ -57,11 +59,9 @@ export default function EventModal() {
         dispatch(setSavedEventsDupli(updateEvents))
         dispatch(updateSavedEvents(updateEvents))
       } else {
-        const pushEvents = [...CalenderSlice.savedEvents, calendarEvent]
-        dispatch(setSavedEventsDupli(pushEvents))
-        dispatch(updateSavedEvents(pushEvents))
+        sendingSocketMessage(calendarEvent, "push")
       }
-      dispatch(updateShowEventModal(false));
+      dispatch(handleupdateShowEventModal(false));
     } else {
       alert("some fields are missing")
     }
@@ -72,6 +72,26 @@ export default function EventModal() {
     dispatch(setSavedEventsDupli(deleteEvent))
     dispatch(updateSavedEvents(deleteEvent))
     dispatch(updateShowEventModal(false));
+  }
+
+
+  const sendingSocketMessage = (evtData, evtType) => {
+    switch (evtType) {
+      case "push":
+        getSocket().emit("schedule-create-request", evtData)
+        getSocket().on("schedule-create-response", (data) => {
+          console.log(data)
+        })
+
+        const pushEvents = [...CalenderSlice.savedEvents, evtData]
+        dispatch(setSavedEventsDupli(pushEvents))
+        dispatch(updateSavedEvents(pushEvents))
+    }
+
+
+    return () => {
+      disConnectSocket();
+    };
   }
 
   return (
@@ -97,7 +117,7 @@ export default function EventModal() {
                     <MdDeleteOutline className="fs-4" />
                   </button>
                 )}
-                <button type="button" onClick={() => dispatch(updateShowEventModal(false))} className="bg-transparent border-0">
+                <button type="button" onClick={() => dispatch(handleupdateShowEventModal(false))} className="bg-transparent border-0">
                   <IoCloseOutline className="fs-3" />
                 </button>
               </div>
@@ -133,11 +153,11 @@ export default function EventModal() {
                     <p className="mb-0">{CalenderSlice.daySelected}</p>
                   </div>
                   <div className="col-3">
-                    <input type="time" className="form-control" value={time} onChange={(e)=>setTime(e.target.value)}/>
+                    <input type="time" className="form-control" value={time} onChange={(e) => setTime(e.target.value)} />
                   </div>
                 </div>
 
-                
+
 
                 <div className="col-12 row align-items-center mb-3">
                   <div className="col-2">

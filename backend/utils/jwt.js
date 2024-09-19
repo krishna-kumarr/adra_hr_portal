@@ -12,10 +12,8 @@ const sendToken = (user, statusCode, res) => {
 
     res.status(statusCode).cookie('token', token, options).cookie('refreshToken', refreshToken, options).json({
         success: true,
-        data: {
-            data: user,
-            message: "User registered successfully"
-        }
+        data: user,
+        message: "User registered successfully"
 
     })
 }
