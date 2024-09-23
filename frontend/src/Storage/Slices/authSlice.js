@@ -49,6 +49,7 @@ const authSlice = createSlice({
         logoutFail(state, action) {
             return {
                 ...state,
+                loading: false,
                 error: action.payload
             }
         },

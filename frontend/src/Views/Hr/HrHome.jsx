@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+
 import { SiMessenger } from "react-icons/si";
 import { GoProject } from "react-icons/go";
 import Images from '../../Utils/Images';
 import { useNavigate } from 'react-router-dom';
 import { Chart } from "react-google-charts";
 import Slider from "react-slick";
-import { GoPeople } from "react-icons/go";
-import { LuUsers2 } from "react-icons/lu";
+import { GoPeople } from "react-icons/go"; 
 import { TbUsersGroup } from "react-icons/tb";
 import { AiOutlineUser } from "react-icons/ai";
 import { IoWalletOutline } from "react-icons/io5";
@@ -19,7 +19,8 @@ import { BiNotepad } from "react-icons/bi";
 import { LuUserCheck2 } from "react-icons/lu";
 import { PiUserList } from "react-icons/pi";
 
-const HrHome = () => {
+
+const HrHome = () => { 
     const navigate = useNavigate();
 
     const widthh = [
@@ -296,6 +297,7 @@ const HrHome = () => {
         ]
     };
 
+    
     return (
         <main className="col-xl-12">
 
@@ -344,7 +346,6 @@ const HrHome = () => {
             {/* main data */}
             <section className="container-fluid mt-3 px-lg-0">
                 <div className="col-12 row gy-3 p-0">
-
                     <div className="col-12 col-md-6 col-lg-6 col-xxl-3 p-1 ">
                         <h6 className='ps-2'>Employee</h6>
                         <div className="card home-employee-min-card-height rounded-4 employer-card">
@@ -556,7 +557,6 @@ const HrHome = () => {
                         </div>
                     </div>
                 </div>
-
             </section>
         </main>
     )

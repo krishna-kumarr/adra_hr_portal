@@ -2,7 +2,7 @@ const sendToken = (user, statusCode, res) => {
 
     //creating jwt token
     const token = user.getJwtToken();
-    const refreshToken = user.getRefreshJwtToken()
+    const refreshToken = user.getRefreshJwtToken();
 
     //setting cookies
     const options = {

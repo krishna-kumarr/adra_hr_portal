@@ -9,7 +9,7 @@ const scheduleSchema = new mongoose.Schema({
     },
     description:{
         type:String,
-        required:["sescription required",true]
+        required:["description required",true]
     },
     id:{
         type:Number,
@@ -32,7 +32,7 @@ const scheduleSchema = new mongoose.Schema({
         required:["role required",true]
     },
     userId:{
-        type:Schema.ObjectId,
+        type: mongoose.SchemaTypes.ObjectId,
         required:true
     }
 })

@@ -39,7 +39,6 @@ export const logout = async (dispatch) => {
 export const loadUser = async (dispatch) => {
     try {
         dispatch(loadUserRequest())
-
         const {data} = await axiosInstance.get('/getuser');
         dispatch(loadUserSuccess(data))
     } catch (error) {

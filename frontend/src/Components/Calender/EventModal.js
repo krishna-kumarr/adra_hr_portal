@@ -8,7 +8,8 @@ import Modal from 'react-bootstrap/Modal';
 import { useDispatch, useSelector } from "react-redux";
 import { setSavedEventsDupli, updateSavedEvents, updateShowEventModal } from "../../Storage/CalenderSlice/CalenderSlice";
 import { disConnectSocket, getSocket } from "../../socket";
-import { handleupdateShowEventModal } from "../../Storage/Action/hrCalenderAction";
+import { addEvent, handleupdateShowEventModal, socketAddEventRequest, socketAddEventSuccess, updateEvent } from "../../Storage/Action/hrCalenderAction";
+import { toast } from "react-toastify";
 
 const labelsClasses = [
   "info",
@@ -20,25 +21,17 @@ const labelsClasses = [
 
 export default function EventModal() {
   const CalenderSlice = useSelector((state) => state.hrCalenderState);
+  const { user } = useSelector((state) => state.userState);
+
   const dispatch = useDispatch();
 
-  const [title, setTitle] = useState(
-    CalenderSlice.selectedEvent ? CalenderSlice.selectedEvent.title : ""
-  );
+  const [title, setTitle] = useState(CalenderSlice.selectedEvent ? CalenderSlice.selectedEvent.title : "");
 
-  const [time, setTime] = useState(
-    CalenderSlice.selectedEvent ? CalenderSlice.selectedEvent.time : ""
-  );
+  const [time, setTime] = useState(CalenderSlice.selectedEvent ? CalenderSlice.selectedEvent.time : "");
 
-  const [description, setDescription] = useState(
-    CalenderSlice.selectedEvent ? CalenderSlice.selectedEvent.description : ""
-  );
+  const [description, setDescription] = useState(CalenderSlice.selectedEvent ? CalenderSlice.selectedEvent.description : "");
 
-  const [selectedLabel, setSelectedLabel] = useState(
-    CalenderSlice.selectedEvent
-      ? labelsClasses.find((lbl) => lbl === CalenderSlice.selectedEvent.label)
-      : labelsClasses[0]
-  );
+  const [selectedLabel, setSelectedLabel] = useState(CalenderSlice.selectedEvent ? labelsClasses.find((lbl) => lbl === CalenderSlice.selectedEvent.label) : labelsClasses[0]);
 
   function handleSubmit() {
     const calendarEvent = {
@@ -50,20 +43,49 @@ export default function EventModal() {
       id: CalenderSlice.selectedEvent ? CalenderSlice.selectedEvent.id : Date.now(),
     };
 
+    const socketCalendarEvent = {
+      title,
+      description,
+      label: selectedLabel,
+      time: time,
+      day: CalenderSlice.daySelected.valueOf(),
+      id: CalenderSlice.selectedEvent ? CalenderSlice.selectedEvent.id : Date.now(),
+      userId: user._id,
+      role: user.role
+    };
+
     if (title !== '' && description !== '' && time) {
 
       if (CalenderSlice.selectedEvent) {
-        const updateEvents = CalenderSlice.savedEvents.map((evt) =>
-          evt.id === calendarEvent.id ? calendarEvent : evt
-        );
-        dispatch(setSavedEventsDupli(updateEvents))
-        dispatch(updateSavedEvents(updateEvents))
-      } else {
-        sendingSocketMessage(calendarEvent, "push")
+        const updationData = { ...CalenderSlice.selectedEvent }
+        updationData.title = calendarEvent.title
+        updationData.description = calendarEvent.description
+        updationData.label = calendarEvent.label
+        updationData.time = calendarEvent.time
+        
+
+        if (calendarEvent.label === "success") {
+          sendingSocketMessage(socketCalendarEvent, "update")
+        } else {
+          dispatch(updateEvent(updationData,CalenderSlice.savedEvents))
+        }
+
       }
-      dispatch(handleupdateShowEventModal(false));
+
+      else {
+
+        if (calendarEvent.label === "success") {
+          sendingSocketMessage(socketCalendarEvent, "push")
+        } else {
+          dispatch(addEvent(calendarEvent))
+        }
+
+      }
     } else {
-      alert("some fields are missing")
+      toast("some fields are missing", {
+        position: "top-right",
+        type: 'warning'
+      })
     }
   }
 
@@ -74,18 +96,16 @@ export default function EventModal() {
     dispatch(updateShowEventModal(false));
   }
 
-
   const sendingSocketMessage = (evtData, evtType) => {
     switch (evtType) {
       case "push":
+        // getSocket().emit("schedule-create-request", evtData, ()=>{
+        //   dispatch(socketAddEventRequest())
+        // })
         getSocket().emit("schedule-create-request", evtData)
         getSocket().on("schedule-create-response", (data) => {
-          console.log(data)
+          dispatch(socketAddEventSuccess(data))
         })
-
-        const pushEvents = [...CalenderSlice.savedEvents, evtData]
-        dispatch(setSavedEventsDupli(pushEvents))
-        dispatch(updateSavedEvents(pushEvents))
     }
 
 

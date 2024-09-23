@@ -5,48 +5,151 @@ const HrCalenderSlice = createSlice({
     name: "hr-calender-slice",
     initialState: {
         monthIndex: '',
-        currentMonthArray:[],
+        currentMonthArray: [],
         smallCalendarMonth: null,
         showEventModal: false,
         daySelected: '',
         selectedEvent: null,
         labels: [],
         savedEvents: [],
-        savedEventsDupli: []
+        eventSaveButton: false,
+        getEventsLoading: false
     },
     reducers: {
-        updatemonthIndex(state, action) {  
+        updatemonthIndex(state, action) {
             return {
                 ...state,
-                monthIndex : action.payload
+                monthIndex: action.payload
             }
         },
-        updatecurrentMonth(state, action) {  
-            console.log(action.payload)
+        updatecurrentMonth(state, action) {
             return {
                 ...state,
-                currentMonthArray : action.payload
+                currentMonthArray: action.payload
             }
         },
-        updatesmallCalendarMonth(state, action) {  
+        updatesmallCalendarMonth(state, action) {
             return {
                 ...state,
-                smallCalendarMonth : action.payload
+                smallCalendarMonth: action.payload
             }
         },
-        updateshowEventModal(state, action) {  
+        updateshowEventModal(state, action) {
             return {
                 ...state,
-                showEventModal : action.payload
+                showEventModal: action.payload,
+                selectedEvent: action.payload ? state.selectedEvent : null
             }
         },
-        updatedaySelected(state, action) {  
+        updatedaySelected(state, action) {
             return {
                 ...state,
-                daySelected : action.payload
+                daySelected: action.payload
             }
-        }  
+        },
 
+
+        updateAddEventRequest(state, action) {
+            return {
+                ...state,
+                eventSaveButton: true
+            }
+        },
+        updateAddEventSuccess(state, action) {
+            return {
+                ...state,
+                eventSaveButton: false,
+                showEventModal: false,
+                savedEvents: [...state.savedEvents, action.payload.data]
+            }
+        },
+        updateAddEventFailed(state, action) {
+            return {
+                ...state,
+                eventSaveButton: false,
+                error: action.payload
+            }
+        },
+
+
+        updateEventRequest(state, action) {
+            return {
+                ...state,
+                eventSaveButton: true
+            }
+        },
+        updateEventSuccess(state, action) {
+            return {
+                ...state,
+                eventSaveButton: false,
+                showEventModal: false,
+                savedEvents: action.payload
+            }
+        },
+        updateEventFailed(state, action) {
+            return {
+                ...state,
+                eventSaveButton: false,
+                error: action.payload
+            }
+        },
+
+
+        getEventRequest(state, action) {
+            return {
+                ...state,
+                getEventsLoading: true
+            }
+        },
+        getEventSuccess(state, action) {
+            return {
+                ...state,
+                getEventsLoading: true,
+                savedEvents: action.payload,
+                selectedEvent:null
+            }
+        },
+        getEventFailed(state, action) {
+            return {
+                ...state,
+                getEventsLoading: false,
+                error: action.payload
+            }
+        },
+        updateselectedEvent(state, action) {
+            return {
+                ...state,
+                selectedEvent: action.payload
+            }
+        },
+
+
+
+        //socket add,update
+        updateSocketAddEventRequest(state, action) {
+            return {
+                ...state,
+                eventSaveButton: true
+            }
+        },
+        updateSocketAddEventSuccess(state, action) {
+            return {
+                ...state,
+                eventSaveButton: false,
+                showEventModal: false,
+                savedEvents: [...state.savedEvents, action.payload]
+            }
+        },
+
+
+
+        // clear error 
+        clearError(state, action) {
+            return {
+                ...state,
+                error: null
+            }
+        }
     }
 })
 
@@ -57,7 +160,26 @@ export const {
     updatesmallCalendarMonth,
     updateshowEventModal,
     updatecurrentMonth,
-    updatedaySelected
+    updatedaySelected,
+    updateAddEventRequest,
+    updateAddEventSuccess,
+    updateAddEventFailed,
+
+    updateEventRequest,
+    updateEventSuccess,
+    updateEventFailed,
+
+    updateselectedEvent,
+
+    getEventRequest,
+    getEventSuccess,
+    getEventFailed,
+    
+
+    updateSocketAddEventRequest,
+    updateSocketAddEventSuccess,
+
+    clearError
 } = actions;
 
 export default reducer;

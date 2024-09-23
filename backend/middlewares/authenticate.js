@@ -1,4 +1,3 @@
-const { default: axios } = require("axios");
 const User = require("../models/userModel");
 const ErrorHandler = require("../utils/errorHandling");
 const catchAsyncError = require("./catchAsyncError");

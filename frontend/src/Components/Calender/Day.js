@@ -1,23 +1,21 @@
 import dayjs from "dayjs";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateDaySelected, updateSelectedEvent, updateShowEventModal } from "../../Storage/CalenderSlice/CalenderSlice";
-import { handleDaySelected, handleupdateShowEventModal } from "../../Storage/Action/hrCalenderAction";
+import { handleDaySelected, handleupdateShowEventModal, updateSelectedEvent } from "../../Storage/Action/hrCalenderAction";
 
 export default function Day({ day, rowIdx }) {
   const CalenderSlice = useSelector((state) => state.hrCalenderState);
   const dispatch = useDispatch();
 
-
   const [dayEvents, setDayEvents] = useState([]);
 
   useEffect(() => {
-    const events = CalenderSlice.savedEventsDupli.filter((evt) => {
+    const events = CalenderSlice.savedEvents.filter((evt) => {
       return evt.day === day.format("DD-MM-YY")
     });
 
     setDayEvents(events);
-  }, [day, CalenderSlice.savedEventsDupli]);
+  }, [day, CalenderSlice.savedEvents]);
 
   function getCurrentDayClass() {
     const format = "DD-MM-YY";
@@ -41,6 +39,10 @@ export default function Day({ day, rowIdx }) {
     dispatch(handleupdateShowEventModal(true));
   }
 
+  const handleSelectedEvent = (evt) =>{
+    dispatch(updateSelectedEvent(evt))
+  }
+
   return (
     <div className={`d-flex flex-wrap col-12 h-100 ${getCurrentDayClass(day)}`} onClick={() => { handleAddEvent(day) }}>
       <header className="text-center w-100 py-2">
@@ -59,7 +61,7 @@ export default function Day({ day, rowIdx }) {
         {dayEvents.map((evt, idx) => (
           <div
             key={idx}
-            onClick={() => dispatch(updateSelectedEvent(evt))}
+            onClick={() => handleSelectedEvent(evt)}
             className={`bg-${evt.label} rounded-2 px-2 cursorPointer text-light mb-2 text-break`}
           >
             {evt.title}

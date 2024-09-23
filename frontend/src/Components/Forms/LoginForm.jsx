@@ -4,12 +4,13 @@ import { HiEyeOff } from 'react-icons/hi'
 import { HiMiniEye } from 'react-icons/hi2'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { login,clearAuthError } from '../../Storage/Action/authAction';
+import { login, clearAuthError } from '../../Storage/Action/authAction';
+import Cookie from 'js-cookie'
 
 const LoginForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { loading, error, isAuthenticated } = useSelector(state => state.userState);
+    const { loading, error, isAuthenticated, user } = useSelector(state => state.userState);
 
     const [eyeOpenIcon, setEyeOpenIcon] = useState(false);
     const [userDetails, setUserDetails] = useState({
@@ -22,9 +23,9 @@ const LoginForm = () => {
         dispatch(login(userDetails.username, userDetails.password))
     }
 
-    useEffect(()=>{
-        if(isAuthenticated){
-            navigate('/hr_dashboard', { replace: true })
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate('/dashboard', { replace: true });
         }
 
         if (error) {
@@ -35,7 +36,7 @@ const LoginForm = () => {
             })
             return
         }
-    },[isAuthenticated,error,loading])
+    }, [isAuthenticated, error, loading])
 
     return (
         <form className="col-lg-5 d-inline-flex align-items-center pe-lg-5">

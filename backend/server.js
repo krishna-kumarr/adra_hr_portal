@@ -40,7 +40,6 @@ const socket = require('./config/socket');
 io.on("connection", socket);
 
 
-
 connectDatabase().catch(console.dir);
 
 // attendance scheduling 

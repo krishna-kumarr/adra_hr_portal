@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
-import dayjs from 'dayjs';
+import React, { useEffect, useState } from 'react';
 import SmallCalendar from '../../../Components/Calender/SmallCalendar';
 import { useSelector } from 'react-redux';
 import { AiOutlinePlus } from "react-icons/ai";
@@ -7,26 +6,16 @@ import { useNavigate } from 'react-router-dom';
 import Images from '../../../Utils/Images';
 
 const HrRightsideCalender = () => {
-    // const CalenderSlice = useSelector((state) => state.calender)
+    const CalenderSlice = useSelector((state) => state.hrCalenderState)
     const navigate = useNavigate();
-
     const [todaysEvent, setTodaysEvent] = useState([]);
-    const [eventDay, setEventDay] = useState('')
-    const [eventDate, setEventDate] = useState('')
 
-
-    // useEffect(() => {
-    //     const format = "DD-MM-YY";
-    //     const slcDay = CalenderSlice.daySelected && CalenderSlice.daySelected;
-    //     const events = CalenderSlice.savedEventsDupli.filter((evt) => evt.day === slcDay);
-    //     const nowDay = dayjs().format(format);
-
-    //     console.log(dayjs().day())
-
-    //     setEventDay(slcDay === nowDay ? `Todays Event` : `Events on ${slcDay}`)
-    //     setTodaysEvent(events)
-
-    // }, [CalenderSlice.daySelected, CalenderSlice.savedEventsDupli])
+    useEffect(() => {
+        const slcDay = CalenderSlice.daySelected && CalenderSlice.daySelected;
+        const events = CalenderSlice.savedEvents.filter((evt) => evt.day === slcDay);
+        setTodaysEvent(events)
+    }, [CalenderSlice.daySelected, CalenderSlice.savedEvents,CalenderSlice.monthIndex])
+    
 
     const dynamicEventClass = (label) => {
         switch (label) {
@@ -80,21 +69,13 @@ const HrRightsideCalender = () => {
                                     }
                                 </div>
                                 :
-                                null
-                        }
-
-
-                        {
-                            todaysEvent.length ?
-                                null
-                                :
                                 <div className="d-flex flex-wrap py-4 px-3 h-100">
                                     <div className='w-100 row align-items-center '>
                                         <div className="col text-center">
                                             <img src={Images.calenderNoEventFound} alt="no events found" width={250} height={200} />
                                             <p>No Events found for today</p>
 
-                                            <button type="button" className='btn btn-md btn-primary w-75 ' onClick={() => navigate('/hr_dashboard/home/schedules')}>
+                                            <button type="button" className='btn btn-md btn-primary w-75 ' onClick={() => navigate('/hr_dashboard/schedules')}>
                                                 <AiOutlinePlus className='me-1' />
                                                 Schedule events
                                             </button>

@@ -1,31 +1,25 @@
 import React, { useEffect } from 'react'
 import CalendarHeader from '../../Components/Calender/CalendarHeader';
 import Month from '../../Components/Calender/Month'
-import { getMonth } from "../../util";
-import dayjs from "dayjs";
 import EventModal from '../../Components/Calender/EventModal';
 import { useDispatch, useSelector } from 'react-redux';
-import axiosInstance from '../../Services/axiosInstance';
-import { updateMonthAction } from '../../Storage/Action/hrCalenderAction';
+import { clearErrors } from '../../Storage/Action/hrCalenderAction';
+import { toast } from 'react-toastify';
 
-const SchedulesManagement = () => {  
+const SchedulesManagement = () => {
   const CalenderSlice = useSelector((state) => state.hrCalenderState);
   const dispatch = useDispatch();
 
-  useEffect(() => { 
-    // dispatch(updateMonthAction(getMonth()))
-    dispatch(updateMonthAction(dayjs().month()))
-    // fetchSechedule()
-  }, []);
-
-  const fetchSechedule = async() =>{
-    try{
-      const res = await axiosInstance.get("/get_schedules")
-      console.log(res)
-    }catch(err){
-      console.log(err)
+  useEffect(() => {
+    if (CalenderSlice.error) {
+      toast(CalenderSlice.error, {
+        position: "top-right",
+        type: 'error',
+        onOpen: () => { dispatch(clearErrors) }
+      })
+      return
     }
-  }
+  }, [CalenderSlice.error])
 
   return (
     <main className="col-xl-12 py-4">

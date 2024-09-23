@@ -3,7 +3,6 @@ const ErrorHandler = require('../utils/errorHandling');
 const csv = require('csvtojson');
 const { sha256 } = require('js-sha256');
 
-
 exports.uploadCsv = catchAsyncError(async (req, res, next) => {
     const { file } = req;
 

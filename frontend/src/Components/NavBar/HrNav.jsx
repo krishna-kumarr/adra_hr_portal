@@ -13,52 +13,9 @@ import dayjs from 'dayjs';
 
 
 const HrNav = () => {
-    // const CalenderSlice = useSelector((state) => state.calender);
     const dispatch = useDispatch();
-    const pageRender = useNavigate();
     const { isAuthenticated, user, loading } = useSelector(state => state.userState)
 
-    // useEffect(() => {
-    //     const format = "DD-MM-YY"; 
-    //     const nowDay = dayjs().format(format);
-
-    //     dispatch(updateDaySelected(nowDay))
-    // }, [])
-
-    // useEffect(() => {
-    //     if (CalenderSlice.smallCalendarMonth !== null) {
-    //         dispatch(updatemonthIndex(CalenderSlice.smallCalendarMonth))
-    //     }
-    // }, [CalenderSlice.smallCalendarMonth]);
-
-    // useEffect(() => {
-    //     if (!CalenderSlice.showEventModal) {
-    //         dispatch(updateSelectedEvent(null))
-    //     }
-    // }, [CalenderSlice.showEventModal]);
-
-
-    // useEffect(() => {
-    //     dispatch(updatemonthIndex(dayjs().month()))
-
-    //     const storageEvents = localStorage.getItem("savedEvents");
-    //     const parsedEvents = storageEvents ? JSON.parse(storageEvents) : [];
-
-    //     const uniqueLabels = [...new Set(parsedEvents.map((evt) => evt.label))];
-
-    //     // Update the labels state
-    //     const label = uniqueLabels.map((label) => {
-    //         const currentLabel = CalenderSlice.labels.find((lbl) => lbl.label === label);
-    //         return {
-    //             label,
-    //             checked: currentLabel ? currentLabel.checked : true,
-    //         };
-    //     });
-    //     dispatch(updateLabels(label))
-
-    //     dispatch(updateSavedEvents(parsedEvents))
-    //     dispatch(setSavedEventsDupli(parsedEvents))
-    // }, [])
     const handleLogout = () =>{
         dispatch(logout)
     }

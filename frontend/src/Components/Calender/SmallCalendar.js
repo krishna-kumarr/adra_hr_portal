@@ -1,10 +1,9 @@
 import dayjs from "dayjs";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { getMonth } from "../../util";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { updateDaySelected, updateSmallCalendarMonth } from "../../Storage/CalenderSlice/CalenderSlice";
+import { useDispatch, useSelector } from "react-redux"; 
 import { handleCurrentMonthArray, handleDaySelected, handleNextMonthAction, handlePrevMonthAction, hanldeupdateSmallCalendarMonth } from "../../Storage/Action/hrCalenderAction";
 
 export default function SmallCalendar() {

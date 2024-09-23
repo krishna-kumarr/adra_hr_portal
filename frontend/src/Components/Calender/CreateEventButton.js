@@ -5,7 +5,6 @@ import { handleupdateShowEventModal } from "../../Storage/Action/hrCalenderActio
 
 
 export default function CreateEventButton() {
-  const CalenderSlice = useSelector((state) => state.hrCalenderState);
   const dispatch = useDispatch();
 
   const handleEventModal = () =>{

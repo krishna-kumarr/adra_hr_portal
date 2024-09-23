@@ -8,6 +8,7 @@ module.exports = (err, req, res, next) => {
         if (err.name === "ValidationError") {
             message = Object.values(err.errors).map(value => value.message)
             error = new Error(message)
+            err.statusCode = 404
         }
 
         if (err.name === "CastError") {
@@ -48,11 +49,13 @@ module.exports = (err, req, res, next) => {
         if (err.name === "ValidationError") {
             message = Object.values(err.errors).map(value => value.message)
             error = new Error(message)
+            err.statusCode = 404
         }
 
         if (err.name === "CastError") {
             message = `Resource Not Found: ${err.path}`;
             error = new Error(message)
+            err.statusCode = 404
         }
 
         if (err.code === 11000) {

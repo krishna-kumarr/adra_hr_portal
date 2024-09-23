@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import dayjs from 'dayjs';
 import { Outlet, useLocation } from 'react-router-dom';
 import HrNav from '../../../Components/NavBar/HrNav';
 import HrRightsideCalender from './HrRightsideCalender';
 import BreadCrumbs from '../../Common/BreadCrumbs';
+import { useDispatch } from 'react-redux';
+import { getSchedules, updateMonthAction } from '../../../Storage/Action/hrCalenderAction';
 
 const HrMainLayout = () => {
     const location = useLocation();
+    const dispatch = useDispatch(); 
+
+    useEffect(()=>{
+        dispatch(updateMonthAction(dayjs().month()))
+        dispatch(getSchedules())
+    },[])
 
     return (
         <section className="hr-page-background-clr">
