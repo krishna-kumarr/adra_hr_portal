@@ -60,6 +60,20 @@ const HrHome = () => {
             ]
         },
         {
+            icon: <GoProject />,
+            title: "interview process",
+            class: "employee_details",
+            text: "text",
+            statusIcon: Images.allEmployers,
+            count: 10,
+            pageLink: "/hr_dashboard/interview_process",
+            cardIcon: [
+                { icon: <TbUsersGroup className='fs-5'/>, count: 15 },
+                { icon: <GoPeople className='fs-5'/>, count: 10 },
+                { icon: <AiOutlineUser className='fs-5'/>, count: 5 },
+            ]
+        },
+        {
             icon: <SiMessenger />,
             title: "Expenses History",
             class: "expenses_history",
@@ -86,7 +100,7 @@ const HrHome = () => {
                 { icon: <TbCalendarTime className='fs-5'/>, count: 15 },
                 { icon: <BsCalendar2Date className='fs-5'/>, count: 15 },
             ]
-        },
+        }
     ];
 
     const pageRender = useNavigate();

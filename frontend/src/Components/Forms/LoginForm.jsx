@@ -5,7 +5,6 @@ import { HiMiniEye } from 'react-icons/hi2'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { login, clearAuthError } from '../../Storage/Action/authAction';
-import Cookie from 'js-cookie'
 
 const LoginForm = () => {
     const dispatch = useDispatch();
@@ -25,7 +24,8 @@ const LoginForm = () => {
 
     useEffect(() => {
         if (isAuthenticated) {
-            navigate('/dashboard', { replace: true });
+            // navigate('/dashboard', { replace: true });
+            navigate('/hr_dashboard', { replace: true });
         }
 
         if (error) {

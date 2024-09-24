@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Login from './Views/Common/Login';
 import HrHome from './Views/Hr/HrHome';
@@ -23,6 +23,7 @@ import store from './store';
 // actions 
 import { loadUser } from './Storage/Action/authAction';
 import ProtectedAuth from './Views/Common/ProtectedAuth';
+import InterviewProcess from './Views/Hr/InterviewProcess';
 
 
 function App() {
@@ -40,7 +41,7 @@ function App() {
           <Routes>
             <Route path='/' element={<Login />} />
 
-            <Route path='dashboard' element={<ProtectedAuth />}>
+            {/* <Route path='dashboard' element={<ProtectedAuth />}> */}
               <Route path="hr_dashboard" element={<HrAuth />}>
                 <Route index element={<HrHome />} />
                 <Route path="employee_details" element={<EmployeesListingPage />}>
@@ -56,13 +57,14 @@ function App() {
                   <Route path="shortlisted" element={<Shortlisted />} />
                   <Route path="rejected" element={<Rejected />} />
                 </Route>
+                <Route path="interview_process" element={<InterviewProcess />} />
                 <Route path="applicant_details" element={<ApplicantDetails />} />
                 <Route path="expense_history" element={<expense_history />} />
                 <Route path="schedules" element={<SchedulesManagement />} />
               </Route>
 
 
-            </Route>
+            {/* </Route> */}
 
           </Routes>
         </div>

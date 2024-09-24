@@ -9,18 +9,18 @@ const ProtectedAuth = () => {
 
     useEffect(() => {
         if (isAuthenticated) {
-            // switch (user.role) {
-            //     case "Hr":
+            switch (user.role) {
+                case "Hr":
                     navigate('/dashboard/hr_dashboard', { replace: true });
-            //         break;
+                    break;
 
-            //     case "developer":
-            //         navigate('/dashboard/developer_dashboard', { replace: true });
-            //         break;
+                case "developer":
+                    navigate('/dashboard/developer_dashboard', { replace: true });
+                    break;
 
-            //     default:
-            //         break;
-            // }
+                default:
+                    break;
+            }
         }
     }, [isAuthenticated])
 

@@ -43,12 +43,6 @@ const NewApplicant = () => {
     ])
 
     const columns = [
-        // {
-        //     name: 'S.No',
-        //     selector: row => row.id,
-        //     sortable: true,
-        //     hide: 'md',
-        // },
         {
             name: 'Id',
             selector: row => row.candidateid,
@@ -65,16 +59,6 @@ const NewApplicant = () => {
             selector: row => row.emailID,
             sortable: true,
         },
-        // {
-        //     name: 'Mobile number',
-        //     selector: row => row.mobileNum,
-        //     sortable: true,
-        // },
-        // {
-        //     name: 'Address',
-        //     selector: row => row.address,
-        //     sortable: true,
-        // },
         {
             name: 'Type',
             selector: row => row.type,
