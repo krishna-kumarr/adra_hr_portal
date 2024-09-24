@@ -21,6 +21,22 @@ body{
   --nav-height: 4rem;
 }
 
+
+/* Question view css */
+
+.bg-custom-success {
+  background-color:#D9FFE9 ;
+}
+
+.bg-custom-danger {
+  background-color:#FFDBDA ;
+}
+
+
+
+
+
+
 .right-side-cntent-overall-height::-webkit-scrollbar,
 .cards-overflow-webkit::-webkit-scrollbar,
 .hr-page-background-clr::-webkit-scrollbar,
