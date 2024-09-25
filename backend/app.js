@@ -9,7 +9,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(cookieParser());
-app.use(cors()) 
+app.use(cors({
+    origin: ["http://localhost:3000"]
+})) 
 
 
 const userRouter = require('./routes/auth');

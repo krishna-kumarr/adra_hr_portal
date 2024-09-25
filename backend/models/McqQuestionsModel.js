@@ -14,9 +14,9 @@ const mcqquestionShema = new mongoose.Schema({
         required: [true, "options required"],
         validate: {
             validator: function (val) {
-                return val.length === 4;
+                return val.length === 4 || val.length === 5;
             },
-            message: "You must provide 4 options."
+            message: "You must provide 4 or 5 options."
         }
     },
     answer: {
