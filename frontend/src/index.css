@@ -21,6 +21,10 @@ body{
   --nav-height: 4rem;
 }
 
+.spinner-border {
+  --bs-spinner-width: 1.1rem !important;
+  --bs-spinner-height: 1.1rem !important;
+}
 
 /* Question view css */
 
@@ -441,6 +445,16 @@ input[type="text"]:focus {
 
 .applicant-tracking-card-height {
   height: 39rem;
+}
+
+.interviewQuestion-height{
+  height: 49.7rem;
+  overflow: hidden;
+}
+
+.question-scroll{
+  height: 100%;
+  overflow-y: scroll;
 }
 
 /* media query  */

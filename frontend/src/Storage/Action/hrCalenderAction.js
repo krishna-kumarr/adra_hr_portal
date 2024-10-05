@@ -95,7 +95,6 @@ export const updateEvent = (event,originalSavedEvents) => async(dispatch) => {
 
         dispatch(updateEventSuccess(update))
     } catch (error) {
-        console.log(error)
         dispatch(updateEventFailed(error.response.data.message))
     }
 }

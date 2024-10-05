@@ -24,6 +24,7 @@ import store from './store';
 import { loadUser } from './Storage/Action/authAction';
 import ProtectedAuth from './Views/Common/ProtectedAuth';
 import InterviewProcess from './Views/Hr/InterviewProcess';
+import CandidateCAmpain from './Views/Hr/Applicant_tracking/CandidateCAmpain';
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
                   <Route path="Intern" element={<EmployeeIntern />} />
                 </Route>
                 <Route path="attendance" element={<AttendanceManagement />} />
+                <Route path="candidate_campain" element={<CandidateCAmpain/>}/>
                 <Route path="applicant_tracking" element={<RecuirementsAndApplicationTracking />} >
                   <Route index exact element={<NewApplicant />} />
                   <Route path="recommended" element={<Recommended />} />

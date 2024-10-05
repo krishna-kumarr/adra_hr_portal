@@ -14,6 +14,7 @@ module.exports = (err, req, res, next) => {
         if (err.name === "CastError") {
             message = `Resource Not Found: ${err.path}`;
             error = new Error(message)
+            err.statusCode = 404
         }
 
         if (err.code === 11000) {
@@ -49,31 +50,31 @@ module.exports = (err, req, res, next) => {
         if (err.name === "ValidationError") {
             message = Object.values(err.errors).map(value => value.message)
             error = new Error(message)
-            err.statusCode = 404
+            err.statusCode = 201
         }
 
         if (err.name === "CastError") {
             message = `Resource Not Found: ${err.path}`;
             error = new Error(message)
-            err.statusCode = 404
+            err.statusCode = 201
         }
 
         if (err.code === 11000) {
             message = `Email ${Object.values(err.keyValue)} already exist`;
             error = new Error(message);
-            err.statusCode = 400
+            err.statusCode = 201
         }
 
         if (err.name === 'JSONWebTokenError') {
             message = `JSON web token is invalid. try again`;
             error = new Error(message);
-            err.statusCode = 400
+            err.statusCode = 401
         }
 
         if (err.name === 'TokenExpiredError') {
             message = `JSON web token is expired. try again`;
             error = new Error(message);
-            err.statusCode = 400
+            err.statusCode = 401
         }
 
 

@@ -5,11 +5,13 @@ const { isAuthenticatedUser, isautherizeRoles } = require('../middlewares/authen
 const router = express.Router();
 const upload = multer();
 
-router.route("/get_question_types").get(isAuthenticatedUser,getQuestionTypes);
-router.route("/get_all_questions").get(isAuthenticatedUser,getAllQuestions);
-router.route("/create_questions").post(isAuthenticatedUser,createQuestions);
-router.route("/update_question").put(isAuthenticatedUser,updateQuestions);
-router.route("/delete_question/:id").delete(isAuthenticatedUser,deleteQuestions);
-router.route("/upload_csv_questions").post(upload.single('file'),isAuthenticatedUser,isautherizeRoles("Hr"),uploadQuestionsUsingCsv);
+router.route("/get_question_types").get(isAuthenticatedUser, getQuestionTypes);
+router.route("/create_questions").post(isAuthenticatedUser, createQuestions);
+router.route("/update_question").put(isAuthenticatedUser, updateQuestions);
+router.route("/delete_question/:id").delete(isAuthenticatedUser, deleteQuestions);
+router.route("/upload_csv_questions").post(isAuthenticatedUser, isautherizeRoles("Hr"), upload.single('file'), uploadQuestionsUsingCsv);
+router.route("/get_all_questions")
+                                .get(isAuthenticatedUser, getAllQuestions)
+                                .post(isAuthenticatedUser, getAllQuestions);
 
 module.exports = router;

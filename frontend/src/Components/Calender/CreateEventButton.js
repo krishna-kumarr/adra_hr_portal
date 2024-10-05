@@ -10,6 +10,7 @@ export default function CreateEventButton() {
   const handleEventModal = () =>{
     dispatch(handleupdateShowEventModal(true))
   }
+  
   return (
     <button
       onClick={handleEventModal}

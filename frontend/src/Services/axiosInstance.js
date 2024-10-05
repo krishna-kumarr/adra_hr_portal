@@ -31,13 +31,23 @@ axiosInstance.interceptors.response.use(
           await refreshToken();
           return axiosInstance(originalRequest);
         }
-        
       }
     } catch (err) {
       return Promise.reject(err);
     }
 
-    return Promise.reject(error);
+    console.log(error)
+    if(error.code === "ERR_BAD_REQUEST"){
+      const errObj = {...error}
+      errObj.response.data = {
+        success:false,
+        data:{},
+        message: errObj.response.data.message ? errObj.response.data.message : "ERR_BAD_REQUEST"
+      }
+      return Promise.reject(errObj);
+    }else{
+      return Promise.reject(error);
+    }
   }
 );
 

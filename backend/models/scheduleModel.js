@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-
 
 const scheduleSchema = new mongoose.Schema({
     day:{

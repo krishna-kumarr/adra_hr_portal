@@ -4,7 +4,6 @@ import { NavLink, Outlet } from 'react-router-dom'
 const RecuirementsAndApplicationTracking = () => {
   return (
     <main className="col-xl-12 ">
-
       <div className="container-fluid p-lg-0">
         <div className="card py-2 mb-2 border-0 rounded-4">
           <div className="col-12 row gy-3 text-center">

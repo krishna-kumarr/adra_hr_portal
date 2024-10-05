@@ -47,12 +47,12 @@ const HrHome = () => {
 
         {
             icon: <SiMessenger />,
-            title: "Recruitment and Applicant tracking",
+            title: "Candidate campain",
             class: "recruitment_tracking",
             text: "text",
             statusIcon: Images.requirementIcon,
             count: 4,
-            pageLink: "/hr_dashboard/applicant_tracking",
+            pageLink: "/hr_dashboard/candidate_campain",
             cardIcon: [
                 { icon: <BiNotepad className='fs-5'/>, count: 15 },
                 { icon: <PiUserList className='fs-5'/>, count: 15 },

@@ -1,9 +1,8 @@
+const { HrInterviewFilter } = require('../functionPieces/HrInterviewFilter');
 const catchAsyncError = require('../middlewares/catchAsyncError');
 const mcqquestionModel = require('../models/McqQuestionsModel');
 const ErrorHandler = require('../utils/errorHandling');
 const csv = require('csvtojson');
-
-
 
 exports.createQuestions = catchAsyncError(async (req, res, next) => {
     const { flag, data } = req.body;
@@ -47,45 +46,38 @@ exports.updateQuestions = catchAsyncError(async (req, res, next) => {
 })
 
 exports.deleteQuestions = catchAsyncError(async (req, res, next) => {
-
-    const deleteQuestion = await mcqquestionModel.findById(req.params.id)
-
-    if (!deleteQuestion) {
-        return next(new ErrorHandler("Questions not found", 404))
+    const { id } = req.params;
+    const { question_type } = req.body;
+    if (!id) {
+        return next(new ErrorHandler("question_id required", 404))
     }
 
-    await mcqquestionModel.deleteOne(req.body)
+    if (!question_type) {
+        return next(new ErrorHandler("question_type required", 404))
+    }
 
+    const deleteQuestion = await mcqquestionModel.findById(id)
+
+    if (!deleteQuestion) {
+        return next(new ErrorHandler("Questions not found", 400))
+    }
+
+    await mcqquestionModel.findByIdAndDelete(id);
+    const quesData = await HrInterviewFilter(question_type);
     res.status(200).json({
         success: true,
+        data: quesData,
         message: "Question deleted successfully"
     })
 })
 
 exports.getAllQuestions = catchAsyncError(async (req, res, next) => {
-    let allQuestions = await mcqquestionModel.find();
+    const { quesType } = req.body;
 
-    let allQuestionTypes = [];
-    allQuestions.forEach((ques) => {
-        if (!allQuestionTypes.includes(ques.question_type)) {
-            allQuestionTypes[allQuestionTypes.length] = ques.question_type
-        }
-    })
-
-    console.log(allQuestionTypes.length)
-    if (allQuestionTypes.length) {
-        allQuestions = allQuestions.filter((v) => {
-            return v.question_type === allQuestionTypes[0]
-        })
-    }
-
+    const quesData = await HrInterviewFilter(quesType);
     res.status(200).json({
         success: true,
-        data: {
-            questions: allQuestions,
-            questionsCount: allQuestions.length,
-            questionsTypes: allQuestionTypes
-        },
+        data: quesData,
         message: "All questions fetched successfully"
     })
 })
@@ -122,9 +114,10 @@ exports.uploadQuestionsUsingCsv = catchAsyncError(async (req, res, next) => {
         const jsonArray = await csv().fromString(req.file.buffer.toString());
 
         if (jsonArray.length) {
+            console.log(jsonArray)
             // checking if all keys are exist in uploaded csv 
             const filterNonEmptyObject = jsonArray.filter((v) => {
-                if (Object.keys(v).length === 7 && Object.keys(v).includes("question_type") && Object.keys(v).includes("question") && Object.keys(v).includes("options_1") && Object.keys(v).includes("options_2") && Object.keys(v).includes("options_3") && Object.keys(v).includes("options_4") && Object.keys(v).includes("answer")) {
+                if (Object.keys(v).includes("question_type") && Object.keys(v).includes("question") && Object.keys(v).includes("options_1") && Object.keys(v).includes("options_2") && Object.keys(v).includes("options_3") && Object.keys(v).includes("options_4") && Object.keys(v).includes("answer")) {
                     return v
                 }
             })
@@ -157,7 +150,7 @@ exports.uploadQuestionsUsingCsv = catchAsyncError(async (req, res, next) => {
                     if (checkingisValueMissing.length === newList.length) {
                         const makingNewArray = newList.map((v) => {
                             return {
-                                question_type: v.question_type.replace(/\n/g, ""),
+                                question_type: v.question_type.toLowerCase().replace(/\n/g, ""),
                                 question: v.question.replace(/\n/g, ""),
                                 options: [
                                     v.options_1.replace(/\n/g, ""),
