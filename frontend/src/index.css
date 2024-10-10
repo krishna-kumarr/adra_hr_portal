@@ -19,12 +19,48 @@ body{
   --developer-cards-active-card-color: #c5dff8a6;
   --background-color: #f8f6fff2;
   --nav-height: 4rem;
+
+  --sidebar-size:15rem;
 }
 
-.spinner-border {
-  --bs-spinner-width: 1.1rem !important;
-  --bs-spinner-height: 1.1rem !important;
+.sidebar{
+  width: var(--sidebar-size);
+  height: 100%;
 }
+.sidebar-header-height{
+  height: 10%;
+  padding: .5rem 0;
+}
+.sidebar-body-height{
+  height: 82%;
+  padding: 1rem 0;
+}
+.sidebar-footer-height{
+  height:8%;
+  padding: 1rem 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Question view css */
 
@@ -445,16 +481,6 @@ input[type="text"]:focus {
 
 .applicant-tracking-card-height {
   height: 39rem;
-}
-
-.interviewQuestion-height{
-  height: 49.7rem;
-  overflow: hidden;
-}
-
-.question-scroll{
-  height: 100%;
-  overflow-y: scroll;
 }
 
 /* media query  */

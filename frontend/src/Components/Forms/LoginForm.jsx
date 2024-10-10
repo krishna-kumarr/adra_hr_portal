@@ -23,6 +23,7 @@ const LoginForm = () => {
     }
 
     useEffect(() => {
+        console.log(isAuthenticated)
         if (isAuthenticated) {
             // navigate('/dashboard', { replace: true });
             navigate('/hr_dashboard', { replace: true });

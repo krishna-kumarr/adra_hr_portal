@@ -36,7 +36,6 @@ axiosInstance.interceptors.response.use(
       return Promise.reject(err);
     }
 
-    console.log(error)
     if(error.code === "ERR_BAD_REQUEST"){
       const errObj = {...error}
       errObj.response.data = {
@@ -44,6 +43,7 @@ axiosInstance.interceptors.response.use(
         data:{},
         message: errObj.response.data.message ? errObj.response.data.message : "ERR_BAD_REQUEST"
       }
+
       return Promise.reject(errObj);
     }else{
       return Promise.reject(error);

@@ -73,7 +73,7 @@ const authSlice = createSlice({
         },
         loadUserFail(state, action) {
             return {
-                ...state,
+                ...state, 
                 loading: false,
             }
         },

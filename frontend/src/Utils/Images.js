@@ -8,6 +8,7 @@ const calenderLogo = require('../assets/images/calenderLogo.png');
 const employerStatus = require('../assets/images/employerStatus.png')
 const attendanceImg = require('../assets/images/attendanceStatus.png')
 const calenderNoEventFound = require('../assets/images/Date.png')
+const sideBarHeaderLogo = require('../assets/images/colorful_logo_3.jpg')
 
 export default {
     calenderNoEventFound,
@@ -20,4 +21,5 @@ export default {
     requirementIcon,
     calenderLogo,
     employerStatus,
+    sideBarHeaderLogo
 }
